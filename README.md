@@ -130,7 +130,8 @@
             mode http
             option http-server-close
             timeout http-keep-alive 3000
-            server serv 127.0.0.1:9000 check```
+            server serv 127.0.0.1:9000 check
+        ```
 
     * More information available [here](https://www.digitalocean.com/community/tutorials/how-to-use-haproxy-to-set-up-http-load-balancing-on-an-ubuntu-vps).
 1. Get your code onto the server.
