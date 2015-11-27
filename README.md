@@ -135,13 +135,36 @@
 
     * More information available [here](https://www.digitalocean.com/community/tutorials/how-to-use-haproxy-to-set-up-http-load-balancing-on-an-ubuntu-vps).
 1. Get your code onto the server.
-    * If you are on windows, use WinSCP
-    * If you are on a unix machine, use scp
+    * If you are on windows, use WinSCP.
+    * If you are on a unix machine, use scp.
         * `scp <source> <destination>`
         * Add -rp if it is a folder you are transfering.
         * `scp -rp <source> <destination>`
         * The format for remote connections is `<username>@<ip_address>:<path>`
-        * Example: `scp -rp ~/Desktop/testServer daniel@107.170.246.157:~/Desktop/testServer`
+        * Example: `scp -rp ~/Desktop/testServer daniel@107.170.246.157:~/testServer`
     * Make sure it is built, whether on your system or on the server directly.
 1. Configure systemd.
-    * __TODO__
+    * Create configuration file: `nano /etc/systemd/system/<filename>.service`
+    * Add the following code to the file:
+    ```
+    [Unit]
+    Description=Go Server
+
+    [Service]
+    ExecStart=/home/<username>/<exepath>
+    WorkingDirectory=/home/<username>/<exefolderpath>
+    User=<username>
+    Group=<username>
+    Restart=always
+
+    [Install]
+    WantedBy=multi-user.target
+    ```
+
+    * Add the service to systemd.
+        * `sudo systemctl enable <filename>.service`
+    * Activate the service.
+        * `sudo systemctl start <filename>.service`
+    * Check if systemd started it.
+        * `sudo systemctl status <filename>.service`
+    * Check if the server is running with your web-browser, just use the server ip address as the url.
