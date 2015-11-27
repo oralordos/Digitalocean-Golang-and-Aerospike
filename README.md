@@ -167,4 +167,5 @@
         * `sudo systemctl start <filename>.service`
     * Check if systemd started it.
         * `sudo systemctl status <filename>.service`
+    * More information about systemd commands can be found [here](http://www.linux.com/learn/tutorials/788613-understanding-and-using-systemd/).
     * Check if the server is running with your web-browser, just use the server ip address as the url.
