@@ -40,12 +40,12 @@
         * If it asks for your password, something went wrong.
 1. Restrict ssh access to root and password connections.
     * As root, edit the settings in the ssh config file.
-        * `sudo nano /etc/ssh/sshd_config`
+        * `nano /etc/ssh/sshd_config`
         * Set the line `PermitRootLogin` to no to disable root login.
         * Set the line `PasswordAuthentication` to no to disable logging in with a password.
             * Make sure to uncomment the line as well.
         * Restart the ssh service.
-          * `sudo service ssh restart`
+          * `service ssh restart`
     * Make sure you test if you can still access it with normal connection before you disconnect the root terminal.
     * And test that the root login really is disabled.
 
@@ -71,7 +71,7 @@
 1. Create a swapspace.
     * Reserve the space.
         * `sudo fallocate -l <size> /swapfile`
-        * <size> is something like `1G` or `512M`
+        * `<size>` is something like `1G` or `512M`
     * Restrict access to root only.
         * `sudo chmod 600 /swapfile`
     * Configure into a swapfile.
@@ -171,3 +171,33 @@
         * `sudo systemctl status <filename>.service`
     * More information about systemd commands can be found [here](http://www.linux.com/learn/tutorials/788613-understanding-and-using-systemd/).
     * Check if the server is running with your web-browser, just use the server ip address as the url.
+
+## Setup Aerospike server.
+1. Download and install Aerospike.
+  * Aerospike only works for 64-bit machines unless you build it from source yourself, and recommends at least 2gb of RAM.
+  * You can get step-by-step instructions for installation [here](http://www.aerospike.com/get-started/#/linux).
+  * Download the archive file.
+    * `wget -O aerospike.tgz 'http://aerospike.com/download/server/latest/artifact/ubuntu12'`
+  * Extract the archive file.
+    * `tar -xvf aerospike.tgz`
+  * Go into the directory on run the installer.
+    * `cd aerospike-server-community-*-ubuntu12`
+    * `sudo ./asinstall`
+  * Start the service.
+    * `sudo service aerospike start && sudo tail -f /var/log/aerospike/aerospike.log | grep cake`
+  * Delete the aerospike install files.
+    * rm -rf aerospike*
+1. Install Aerospike management server
+  * Install python2.x, python development libraries, and gcc
+    * `sudo apt-get install python gcc python-dev`
+  * Download the package file.
+    * `wget -O amc.deb http://www.aerospike.com/download/amc/latest/artifact/ubuntu12`
+  * Install the server.
+    * `sudo dpkg -i amc.deb`
+  * Allow the server port through the firewall.
+    * `sudo ufw allow 8081/tcp`
+    * `sudo service ufw restart`
+  * Start the server.
+    * `sudo /etc/init.d/amc start`
+  * Examine the amc in your web-browser, address is: `<server_ip>:8081`
+    * When it asks you for the ip of a node, enter the localhost ip: `127.0.0.1`
