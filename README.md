@@ -91,7 +91,7 @@
     * Some packages still require a native Go install to build though.
     * Download Go.
         * `wget <url>`
-        * The url for 1.5.1 is `https://storage.googleapis.com/golang/go1.5.1.linux-386.tar.gz`
+        * The url for 1.5.1 is `https://storage.googleapis.com/golang/go1.5.1.linux-amd64.tar.gz`
     * Extract Go from the archive file.
         * `tar -xzf <filename>`
     * Move Go to the default install location.
@@ -117,8 +117,6 @@
     * Allow https through the firewall, if needed.
         * `sudo ufw allow https`
         * or `sudo ufw allow 443/tcp`
-    * Reload the firewall.
-        * `sudo ufw reload`
 1. Setup haproxy.
     * Install haproxy.
         * `sudo apt-get install haproxy`
@@ -136,6 +134,8 @@
         ```
 
     * More information available [here](https://www.digitalocean.com/community/tutorials/how-to-use-haproxy-to-set-up-http-load-balancing-on-an-ubuntu-vps).
+  * Reload haproxy
+    * `sudo service haproxy reload`
 1. Get your code onto the server.
     * If you are on windows, use WinSCP.
     * If you are on a unix machine, use scp.
@@ -146,7 +146,7 @@
         * Example: `scp -rp ~/Desktop/testServer daniel@107.170.246.157:~/testServer`
     * Make sure it is built, whether on your system or on the server directly.
 1. Configure systemd.
-    * Create configuration file: `nano /etc/systemd/system/<filename>.service`
+    * Create configuration file: `sudo nano /etc/systemd/system/<filename>.service`
     * Add the following code to the file:
     ```
     [Unit]
@@ -203,6 +203,8 @@
     * `sudo /etc/init.d/amc start`
   * Examine the amc in your web-browser, address is: `<server_ip>:8081`
     * When it asks you for the ip of a node, enter the localhost ip: `127.0.0.1`
+  * Delete amc install file.
+    * `rm amc.deb`
 1. Configure Aerospike.
   * Add namespaces as needed.
     * `sudo nano /etc/aerospike/aerospike.conf`
@@ -226,3 +228,4 @@
   * Information on connecting can be found [here](http://www.aerospike.com/docs/client/go/usage/connect/).
   * Information on writing a record, including how to write to a single value in a field and how to set an expiration date for data can be found [here](http://www.aerospike.com/docs/client/go/usage/kvs/write.html).
   * Information on reading a record, including only getting parts of an object, can be found [here](http://www.aerospike.com/docs/client/go/usage/kvs/read.html).
+  * Information on queries can be found [here](http://www.aerospike.com/docs/client/go/usage/query/query.html).

@@ -15,7 +15,7 @@ import (
 
 type user struct {
 	Username string
-	Password []byte
+	Password string
 	ID       string
 }
 
@@ -32,7 +32,7 @@ func main() {
 	defer f.Close()
 	log.SetOutput(f)
 
-	client, err = as.NewClient("10.134.123.172", 3000)
+	client, err = as.NewClient("127.0.0.1", 3000)
 	if err != nil {
 		panic(err)
 	}
@@ -119,7 +119,7 @@ func login(res http.ResponseWriter, req *http.Request, _ httprouter.Params) {
 		} else {
 			u = &user{
 				Username: res.Record.Bins["Username"].(string),
-				Password: res.Record.Bins["Password"].([]byte),
+				Password: res.Record.Bins["Password"].(string),
 				ID:       res.Record.Bins["ID"].(string),
 			}
 			break
@@ -131,7 +131,7 @@ func login(res http.ResponseWriter, req *http.Request, _ httprouter.Params) {
 		http.Redirect(res, req, "/login?msg=No such user", http.StatusSeeOther)
 		return
 	}
-	if bcrypt.CompareHashAndPassword(u.Password, []byte(p)) != nil {
+	if bcrypt.CompareHashAndPassword([]byte(u.Password), []byte(p)) != nil {
 		http.Redirect(res, req, "/login?msg=Incorrect password", http.StatusSeeOther)
 		return
 	}
@@ -181,7 +181,7 @@ func create(res http.ResponseWriter, req *http.Request, _ httprouter.Params) {
 	}
 	u := user{
 		Username: name,
-		Password: hashPass,
+		Password: string(hashPass),
 		ID:       id.String(),
 	}
 
