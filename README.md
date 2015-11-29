@@ -3,7 +3,7 @@
 ## Setup Ubuntu user account
 1. Create a server.
     * Make sure to set the server to ubuntu 15.10.
-    * 32-bit is recommended unless you have more than 4gb of RAM.
+    * 32-bit is recommended unless you have more than 4gb of RAM, except for if you use Aerospike, which requires 64-bit for both main database and API.
     * Make sure you turn on private networking so you can connect to your database without using up bandwidth.
     * Make sure you have put in an ssh key here to avoid unsecure password logins.
 1. Connect to server's root account.
@@ -211,7 +211,7 @@
     * `sudo service aerospike restart`
 
 ## Get Go Aerospike library and test server
-  1. Get the go client library.
+  1. Get the go client library (64-bit only).
     * `go get github.com/aerospike/aerospike-client-go`
   1. Run the benchmark tool, (64-bit only).
     * Change into the client code directory, tools/benchmark
