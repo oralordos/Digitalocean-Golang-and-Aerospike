@@ -209,6 +209,7 @@
   * Add namespaces as needed.
     * `sudo nano /etc/aerospike/aerospike.conf`
     * At the bottom of the file is the test and bar namespaces, comment them out and use them as examples.
+    * This is also the file where you can configure having multiple nodes in a cluster. More information on configuring Aerospike [here](http://www.aerospike.com/docs/operations/configure/network/).
   * Restart Aerospike.
     * `sudo service aerospike restart`
 
