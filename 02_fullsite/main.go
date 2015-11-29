@@ -92,11 +92,11 @@ func index(res http.ResponseWriter, req *http.Request, _ httprouter.Params) {
 	c, err := req.Cookie("login")
 	if err == nil {
 		id := c.Value
-		user, ok := idUsers[id]
+		u, ok := idUsers[id]
 		if !ok {
 			log.Printf("error getting logged in user with id %s\n", id)
 		} else {
-			username = user.Username
+			username = u.Username
 		}
 	}
 	err = tpl.ExecuteTemplate(res, "index", username)
@@ -117,23 +117,23 @@ func loginPage(res http.ResponseWriter, req *http.Request, _ httprouter.Params) 
 }
 
 func login(res http.ResponseWriter, req *http.Request, _ httprouter.Params) {
-	u := req.FormValue("username")
+	name := req.FormValue("username")
 	p := req.FormValue("password")
 
-	user, ok := users[u]
+	u, ok := users[name]
 	if !ok {
-		log.Printf("error logging in, no such user: %s\n", u)
+		log.Printf("error logging in, no such user: %s\n", name)
 		http.Redirect(res, req, "/login?msg=No such user", http.StatusSeeOther)
 		return
 	}
-	if bcrypt.CompareHashAndPassword(user.Password, []byte(p)) != nil {
+	if bcrypt.CompareHashAndPassword(u.Password, []byte(p)) != nil {
 		http.Redirect(res, req, "/login?msg=Incorrect password", http.StatusSeeOther)
 		return
 	}
 
 	http.SetCookie(res, &http.Cookie{
 		Name:  "login",
-		Value: user.ID,
+		Value: u.ID,
 	})
 	http.Redirect(res, req, "/", http.StatusSeeOther)
 }

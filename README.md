@@ -203,6 +203,12 @@
     * `sudo /etc/init.d/amc start`
   * Examine the amc in your web-browser, address is: `<server_ip>:8081`
     * When it asks you for the ip of a node, enter the localhost ip: `127.0.0.1`
+1. Configure Aerospike.
+  * Add namespaces as needed.
+    * `sudo nano /etc/aerospike/aerospike.conf`
+    * At the bottom of the file is the test and bar namespaces, comment them out and use them as examples.
+  * Restart Aerospike.
+    * `sudo service aerospike restart`
 
 ## Get Go Aerospike library and test server
   1. Get the go client library.
@@ -213,3 +219,10 @@
     * Run the tool.
       * `go run benchmark.go -h <ip_address>`
       * Note this will only work from a server in digitalocean, since the firewall is configured to only allow connections from eth1, which is the private network.
+      * Private ip address can be found with: `ifconfig | grep "inet addr"`, the middle address should be the private one.
+
+## Additional API help
+  * The [godoc](https://godoc.org/github.com/aerospike/aerospike-client-go) page is very large, but has everything, including enterprise edition commands.
+  * Information on connecting can be found [here](http://www.aerospike.com/docs/client/go/usage/connect/).
+  * Information on writing a record, including how to write to a single value in a field and how to set an expiration date for data can be found [here](http://www.aerospike.com/docs/client/go/usage/kvs/write.html).
+  * Information on reading a record, including only getting parts of an object, can be found [here](http://www.aerospike.com/docs/client/go/usage/kvs/read.html).
