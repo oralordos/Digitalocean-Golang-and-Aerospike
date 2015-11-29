@@ -40,10 +40,12 @@
         * If it asks for your password, something went wrong.
 1. Restrict ssh access to root and password connections.
     * As root, edit the settings in the ssh config file.
-        * `nano /etc/ssh/sshd_config`
+        * `sudo nano /etc/ssh/sshd_config`
         * Set the line `PermitRootLogin` to no to disable root login.
         * Set the line `PasswordAuthentication` to no to disable logging in with a password.
             * Make sure to uncomment the line as well.
+        * Restart the ssh service.
+          * `sudo service ssh restart`
     * Make sure you test if you can still access it with normal connection before you disconnect the root terminal.
     * And test that the root login really is disabled.
 
