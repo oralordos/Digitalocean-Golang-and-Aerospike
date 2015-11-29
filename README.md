@@ -49,7 +49,7 @@
     * Make sure you test if you can still access it with normal connection before you disconnect the root terminal.
     * And test that the root login really is disabled.
 
-## Setup additional helpful items.
+## Setup additional helpful items
 1. Setup firewall.
     * Allow ssh through the firewall.
         * `sudo ufw allow ssh`
@@ -85,7 +85,7 @@
         * `sudo poweroff`
     * Save a snapshot in the digitalocean console.
 
-## Get a Go server running.
+## Get a Go server running
 1. (optional) install Go.
     * If you have Go 1.5 or newer, you can cross compile most programs and transfer the executable.
     * Some packages still require a native Go install to build though.
@@ -172,7 +172,7 @@
     * More information about systemd commands can be found [here](http://www.linux.com/learn/tutorials/788613-understanding-and-using-systemd/).
     * Check if the server is running with your web-browser, just use the server ip address as the url.
 
-## Setup Aerospike server.
+## Setup Aerospike server
 1. Download and install Aerospike.
   * Aerospike only works for 64-bit machines unless you build it from source yourself, and recommends at least 2gb of RAM.
   * You can get step-by-step instructions for installation [here](http://www.aerospike.com/get-started/#/linux).
@@ -183,11 +183,14 @@
   * Go into the directory on run the installer.
     * `cd aerospike-server-community-*-ubuntu12`
     * `sudo ./asinstall`
+  * Allow the database port through the firewall.
+    * `sudo ufw allow in on eth1 to any port 3000 proto tcp`
   * Start the service.
-    * `sudo service aerospike start && sudo tail -f /var/log/aerospike/aerospike.log | grep cake`
+    * `sudo service aerospike start`
+    * Check when it is ready with: `sudo tail -f /var/log/aerospike/aerospike.log | grep cake`
   * Delete the aerospike install files.
     * rm -rf aerospike*
-1. Install Aerospike management server
+1. Install Aerospike management server (optional).
   * Install python2.x, python development libraries, and gcc
     * `sudo apt-get install python gcc python-dev`
   * Download the package file.
@@ -196,8 +199,17 @@
     * `sudo dpkg -i amc.deb`
   * Allow the server port through the firewall.
     * `sudo ufw allow 8081/tcp`
-    * `sudo service ufw restart`
   * Start the server.
     * `sudo /etc/init.d/amc start`
   * Examine the amc in your web-browser, address is: `<server_ip>:8081`
     * When it asks you for the ip of a node, enter the localhost ip: `127.0.0.1`
+
+## Get Go Aerospike library and test server
+  1. Get the go client library.
+    * `go get github.com/aerospike/aerospike-client-go`
+  1. Run the benchmark tool, (64-bit only).
+    * Change into the client code directory, tools/benchmark
+      * `cd $GOPATH/src/github.com/aerospike/aerospike-client-go/tools/benchmark`
+    * Run the tool.
+      * `go run benchmark.go -h <ip_address>`
+      * Note this will only work from a server in digitalocean, since the firewall is configured to only allow connections from eth1, which is the private network.

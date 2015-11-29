@@ -2,9 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"github.com/julienschmidt/httprouter"
-	"github.com/nu7hatch/gouuid"
-	"golang.org/x/crypto/bcrypt"
 	"html/template"
 	"io"
 	"log"
@@ -12,12 +9,16 @@ import (
 	"os"
 	"os/signal"
 	"strings"
+
+	"github.com/julienschmidt/httprouter"
+	"github.com/nu7hatch/gouuid"
+	"golang.org/x/crypto/bcrypt"
 )
 
 type user struct {
 	Username string
 	Password []byte
-	Id       string
+	ID       string
 }
 
 var tpl *template.Template
@@ -70,7 +71,7 @@ func loadUsers() {
 		panic(err)
 	}
 	for _, u := range users {
-		idUsers[u.Id] = u
+		idUsers[u.ID] = u
 	}
 }
 
@@ -132,7 +133,7 @@ func login(res http.ResponseWriter, req *http.Request, _ httprouter.Params) {
 
 	http.SetCookie(res, &http.Cookie{
 		Name:  "login",
-		Value: user.Id,
+		Value: user.ID,
 	})
 	http.Redirect(res, req, "/", http.StatusSeeOther)
 }
@@ -176,7 +177,7 @@ func create(res http.ResponseWriter, req *http.Request, _ httprouter.Params) {
 	u := user{
 		Username: name,
 		Password: hashPass,
-		Id:       id.String(),
+		ID:       id.String(),
 	}
 	users[name] = u
 	idUsers[id.String()] = u
