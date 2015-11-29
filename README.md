@@ -229,3 +229,4 @@
   * Information on writing a record, including how to write to a single value in a field and how to set an expiration date for data can be found [here](http://www.aerospike.com/docs/client/go/usage/kvs/write.html).
   * Information on reading a record, including only getting parts of an object, can be found [here](http://www.aerospike.com/docs/client/go/usage/kvs/read.html).
   * Information on queries can be found [here](http://www.aerospike.com/docs/client/go/usage/query/query.html).
+  * When you are querying on something, make sure you add a secondary index for that field. You can do that programmatically with Go, or using the Aerospike management server.
