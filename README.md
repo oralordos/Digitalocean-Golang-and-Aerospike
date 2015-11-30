@@ -1,5 +1,20 @@
 # How to setup Go and Aerospike in digitalocean Ubuntu 15.10
 
+## Setup ssh keys
+* For UNIX
+    1. Check if key already exists.
+        * `cat ~/.ssh/id_rsa.pub`
+    1. If key does not exist, generate it.
+        * `ssh-keygen`
+        * The default location is best.
+        * A passcode is only needed for high security sites, just don't lose your computer.
+        * You can find your public key in the file with a .pub extension.
+* For Windows
+    1. Run puttyGen and generate a key.
+    1. You can get the public key in puttyGen in the upper window.
+    1. Save the private key somewhere.
+    1. Make sure to point putty and WinSCP to the private key.
+
 ## Setup Ubuntu user account
 1. Create a server.
     * Make sure to set the server to ubuntu 15.10.
