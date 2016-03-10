@@ -106,7 +106,8 @@
     * Some packages still require a native Go install to build though.
     * Download Go.
         * `wget <url>`
-        * The url for 1.5.1 is `https://storage.googleapis.com/golang/go1.5.1.linux-amd64.tar.gz`
+        * The url for 32-bit 1.6 is `https://storage.googleapis.com/golang/go1.6.linux-386.tar.gz`
+        * The url for 64-bit 1.6 is `https://storage.googleapis.com/golang/go1.6.linux-amd64.tar.gz`
     * Extract Go from the archive file.
         * `tar -xzf <filename>`
     * Move Go to the default install location.
