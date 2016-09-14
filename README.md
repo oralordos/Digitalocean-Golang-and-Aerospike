@@ -1,4 +1,4 @@
-# How to setup Go and Aerospike in digitalocean Ubuntu 15.10
+# How to setup Go and Aerospike in digitalocean Ubuntu 16.04
 
 ## Setup ssh keys
 * For UNIX
@@ -17,15 +17,16 @@
 
 ## Setup Ubuntu user account
 1. Create a server.
-    * Make sure to set the server to ubuntu 15.10.
+    * Make sure to set the server to ubuntu 16.04.
     * 32-bit is recommended unless you have more than 4gb of RAM, except for if you use Aerospike, which requires 64-bit for both main database and API.
     * Make sure you turn on private networking so you can connect to your database without using up bandwidth.
     * Make sure you have put in an ssh key here to avoid unsecure password logins.
+    * It is a good idea to turn on IPv6 so your server will support it.
 1. Connect to server's root account.
     * Use ssh on unix machines.
         * `ssh root@<ip_address>`
     * Make sure you have setup ssh keys with your computer.
-    * Windows user should use putty.
+    * Windows users should use putty.
 1. Create a user with sudo access.
     * `adduser <username>`
     * Make sure to put in a good password!
@@ -106,10 +107,10 @@
     * Some packages still require a native Go install to build though.
     * Download Go.
         * `wget <url>`
-        * The url for 32-bit 1.6 is `https://storage.googleapis.com/golang/go1.6.linux-386.tar.gz`
-        * The url for 64-bit 1.6 is `https://storage.googleapis.com/golang/go1.6.linux-amd64.tar.gz`
+        * The url for 32-bit 1.7.1 is `https://storage.googleapis.com/golang/go1.7.1.linux-386.tar.gz`
+        * The url for 64-bit 1.7.1 is `https://storage.googleapis.com/golang/go1.7.1.linux-amd64.tar.gz`
     * Extract Go from the archive file.
-        * `tar -xzf <filename>`
+        * `tar -xf <filename>`
     * Move Go to the default install location.
         * `sudo mv go /usr/local/go`
     * Change owner to root and alter permissions.
@@ -118,11 +119,14 @@
     * Create workspace folder.
         * `mkdir <workspace_name>{,/bin,/pkg,/src}`
     * Edit environment variables.
+        * Use `nano <filename>` to edit the file.
+            * You have to use `sudo nano <filename>` to edit a file that does not start in `~/`
         * Add `export PATH=$PATH:/usr/local/go/bin` to `/etc/profile`
         * Add `export GOPATH=$HOME/<workspace_name>` to `~/.profile`
         * Add `export PATH=$HOME/<workspace_name>/bin:$PATH` to `~/.profile`
     * Delete the go archive file.
         * `rm <filename>`
+            * This will probably be called something like: `go1.7.1.linux-386.tar.gz`
     * Install git.
         * `sudo apt-get install git`
     * Reconnect to the server to allow environment variables to update.
