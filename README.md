@@ -146,7 +146,8 @@
         * Add `option redispatch` to the default section.
         * Add the following block to the end of the file:
         ```
-        listen serv 0.0.0.0:80
+        listen serv
+            bind *:80
             mode http
             option http-server-close
             timeout http-keep-alive 3000
