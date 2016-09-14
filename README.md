@@ -153,6 +153,8 @@
             timeout http-keep-alive 3000
             server serv 127.0.0.1:9000 check
         ```
+        * If you want to bind to both IPv6 and IPv4, change the bind command to `bind :::80 v4v6`
+        * If your server can handle https traffic, change mode to `mode tcp`
 
     * More information available [here](https://www.digitalocean.com/community/tutorials/how-to-use-haproxy-to-set-up-http-load-balancing-on-an-ubuntu-vps).
   * Reload haproxy
@@ -168,6 +170,7 @@
     * Make sure it is built, whether on your system or on the server directly.
 1. Configure systemd.
     * Create configuration file: `sudo nano /etc/systemd/system/<filename>.service`
+        * <filename> can be anything, just remember what it is so you can use it below.
     * Add the following code to the file:
     ```
     [Unit]
